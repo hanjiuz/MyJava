@@ -17,7 +17,7 @@ public class BubbleSorting {
 	}	
     
 	/**
-     * 冒泡排序
+     * 冒泡排序 - 每一轮冒出一个最大（或最小），放到最后（或最前），直到全部冒完。
      *
      * @param arr
      */
@@ -51,7 +51,7 @@ public class BubbleSorting {
 	}
 	
 	/**
-     * 交换数组元素
+     * 交换数组元素 - 这个交换不能处理a==b的情况，会导致值为0
      * @param arr
      * @param a
      * @param b

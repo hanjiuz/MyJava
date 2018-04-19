@@ -17,7 +17,7 @@ public class InsertionSorting {
 	}	
     
 	/**
-     * 插入排序
+     * 插入排序 - 前面子队列是有序的，后面的插入到适当位置得到一个更大的子队列，直至全部有序。
      *
      * @param arr
      */

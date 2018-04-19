@@ -16,7 +16,7 @@ public class SelectSorting {
 	}	
     
     /**
-     * 简单选择排序
+     * 简单选择排序 - 每一轮选择一个最小的放前面，直到选完所有的（选n-1轮就都选完了）。
      *
      * @param arr
      */

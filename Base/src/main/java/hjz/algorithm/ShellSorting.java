@@ -6,12 +6,20 @@ public class ShellSorting {
 	public static void main(String[] args) {
 		int [] arr1 = {38, 70, 30, 22, 14, 21, 5, 66, 62, 65};
 		
+		/**
+		 * 希尔排序是根据一个增量序列进行，一般可以选择希尔序列
+		 * 希尔序列不是最优序列，但可以突破O（n*n）
+		 * 遍历增量序列里面的每个增量gap，按照gap把元素分组，每个组内部采用简单插入排序法排序。
+		 * 原理是序列内排序不浪费
+		 * 
+		 */
+		
 		System.out.println("array before sorting:");
 		print(arr1);
 		
 		shellSort1(arr1);
 		
-		System.out.println("array after shell sorting:");
+		System.out.println("array after shell sorting1(swap):");
 		print(arr1);
 		
 		int [] arr2 = {38, 70, 30, 22, 14, 21, 5, 66, 62, 65};
@@ -20,7 +28,7 @@ public class ShellSorting {
 		
 		shellSort1(arr2);
 		
-		System.out.println("array after shell sorting:");
+		System.out.println("array after shell sorting2(move):");
 		print(arr2);
 
 	}	
@@ -31,7 +39,7 @@ public class ShellSorting {
 	      */
 	     public static void shellSort1(int []arr){
 	         //增量gap，并逐步缩小增量
-	        for(int gap=arr.length/2;gap>0;gap/=2){
+	        for(int gap=arr.length/2;gap>0;gap/=2){  //loop 希尔增量序列
 	            //从第gap个元素，逐个对其所在组进行直接插入排序操作
 	            for(int i=gap;i<arr.length;i++){
 	                int j = i;
@@ -54,16 +62,17 @@ public class ShellSorting {
 	             //从第gap个元素，逐个对其所在组进行直接插入排序操作
 	             for(int i=gap;i<arr.length;i++){
 	                 int j = i;
+	                 
 	                 int temp = arr[j];
-	                 if(arr[j]<arr[j-gap]){
-	                     while(j-gap>=0 && temp<arr[j-gap]){
-	                         //移动法
-	                         arr[j] = arr[j-gap];
-	                         j-=gap;
-	                     }
-	                     arr[j] = temp;
-	                 }
-	             }
+	                
+                     while(j-gap>=0 && temp<arr[j-gap]){
+                         //移动法
+                         arr[j] = arr[j-gap];
+                         j-=gap;
+                     }
+                     //move temp to right place
+                     arr[j] = temp;
+	            }	             
 	         }
 	     }
 	
