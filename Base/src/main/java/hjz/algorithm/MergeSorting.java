@@ -16,7 +16,11 @@ public class MergeSorting {
 
 	}
 	
-	
+	/**
+	 * 归并排序 - 一分为二，分而治之，递归进行。
+	 * 归并排序需要临时空间。
+	 * @param arr
+	 */
 	public static void mergeSort(int []arr){
         int []temp = new int[arr.length]; //在排序前，先建好一个长度等于原数组长度的临时数组，避免递归中频繁开辟空间
         

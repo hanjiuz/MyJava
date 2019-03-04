@@ -18,6 +18,7 @@ public class QuickSorting {
 	
     /**
      * 快速排序 - 选取枢纽元，分而治之。
+     * 快速排序在原来的数组中进行，所以不用额外的临时空间，也不用merge。
      * @param arr
      * 
      */

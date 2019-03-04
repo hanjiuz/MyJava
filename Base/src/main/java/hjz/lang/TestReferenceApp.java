@@ -33,55 +33,90 @@ public class TestReferenceApp
     }
     
     public void testSoftRef() {
+    	
+    	System.out.println("testSoftRef()");
+    	
 		Object obj = new Object();
-		SoftReference<Object> softRef = new SoftReference<Object>(obj);
+		ReferenceQueue<Object> refQueue = new ReferenceQueue<Object>();
+		SoftReference<Object> softRef = new SoftReference<Object>(obj, refQueue);
 		
 		//it is different to put obj or softRef to cache (e.g. HashSet)
 		
-		System.out.println(softRef.get());
+		System.out.println(softRef.get());    //should not null
+		System.out.println(refQueue.poll());  //should null
 		
+		//only softref now
 		obj = null;
-		System.out.println(obj);
-		System.out.println(softRef.get());
+		
+		System.out.println(softRef.get());      //should not null
+		System.out.println(refQueue.poll());    //should null
 		
 		System.gc();
 		
-		System.out.println(softRef.get());
+		//how to exhost the JVM memory?
+		
+		System.out.println(softRef.get());     //should not null
+		System.out.println(refQueue.poll());   //should null
 		
 		
 	}
 
 	public void testWeakRef() {
+		
+		System.out.println("testWeakRef()");
+		
     	Object obj = new Object();
     	ReferenceQueue<Object> refQueue = new ReferenceQueue<Object>();
     	
     	WeakReference<Object> weakRef = new WeakReference<Object>(obj, refQueue);
     	
-    	System.out.println(weakRef.get());
-    	System.out.println(refQueue.poll());
+    	System.out.println(weakRef.get());  //should not null
+    	System.out.println(refQueue.poll());  //should null
     	
     	obj = null;
+    	
     	System.gc();
     	
-    	System.out.println(weakRef.get());
-    	System.out.println(refQueue.poll());
+    	System.out.println(weakRef.get());	//should not null
+    	System.out.println(refQueue.poll()); //should not null
     	
     }
     
     public void testPhantomRef() {
-    	Object obj = new Object();
+    	
+    	System.out.println("testPhantomRef()");
+    	
+    	
+    	Object obj = new MyObject();
     	ReferenceQueue<Object> refQueue = new ReferenceQueue<Object>();
     	
     	PhantomReference<Object> phantomRef = new PhantomReference<Object>(obj, refQueue);
     	
-    	System.out.println(phantomRef.get());
-    	System.out.println(refQueue.poll());
+    	System.out.println(phantomRef.get());    //will always null
+    	System.out.println(refQueue.poll());   //might null
     	
     	obj = null;
     	System.gc();
+    
     	
-    	System.out.println(phantomRef.get());
-    	System.out.println(refQueue.poll());
+//    	try {
+//    		//wait 3s
+//			Thread.sleep(3000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+    	System.out.println(phantomRef.get());    //will always null
+    	System.out.println(refQueue.poll());  //should not null
     	
     }
+    
+    private static class MyObject {
+    	
+    	protected void finalize() throws Throwable {
+    		super.finalize();
+    		System.out.println("MyObject is finalizing...");
+    	}
+    }
+    
 }
